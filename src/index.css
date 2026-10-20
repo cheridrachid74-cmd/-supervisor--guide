@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+@media print {
+  html, body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+  }
+
+  /* Hide app navigation, modals overlays, backdrop and buttons during print */
+  nav,
+  header,
+  footer,
+  .print-hidden,
+  button,
+  .no-print {
+    display: none !important;
+  }
+
+  /* Reset modal containers so content prints cleanly */
+  .printable-document {
+    position: static !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 8mm !important;
+    box-shadow: none !important;
+    border: none !important;
+    overflow: visible !important;
+    display: block !important;
+  }
+
+  .page-break-inside-avoid {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+}

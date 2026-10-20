@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#065f46" />
+      <stop offset="50%" stop-color="#047857" />
+      <stop offset="100%" stop-color="#064e3b" />
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fef08a" />
+      <stop offset="50%" stop-color="#facc15" />
+      <stop offset="100%" stop-color="#ca8a04" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity="0.35" />
+    </filter>
+  </defs>
+
+  <!-- Background Squircle -->
+  <rect width="512" height="512" rx="112" fill="url(#bgGrad)" />
+
+  <!-- Outer Ring Accent -->
+  <rect x="20" y="20" width="472" height="472" rx="96" fill="none" stroke="url(#goldGrad)" stroke-width="4" stroke-opacity="0.4" />
+
+  <!-- Content Container with shadow -->
+  <g filter="url(#shadow)" transform="translate(0, -10)">
+    <!-- Scales of Justice & Open Book -->
+    <!-- Open Book -->
+    <path d="M 120 340 Q 256 310 256 370 Q 256 310 392 340 L 392 200 Q 256 170 256 230 Q 256 170 120 200 Z" fill="#ffffff" />
+    <!-- Book Spine & Pages Lines -->
+    <path d="M 256 230 L 256 370" stroke="#047857" stroke-width="5" stroke-linecap="round" />
+    <path d="M 150 240 Q 200 230 230 240" stroke="#cbd5e1" stroke-width="3" stroke-linecap="round" />
+    <path d="M 150 270 Q 200 260 230 270" stroke="#cbd5e1" stroke-width="3" stroke-linecap="round" />
+    <path d="M 150 300 Q 200 290 230 300" stroke="#cbd5e1" stroke-width="3" stroke-linecap="round" />
+    <path d="M 362 240 Q 312 230 282 240" stroke="#cbd5e1" stroke-width="3" stroke-linecap="round" />
+    <path d="M 362 270 Q 312 260 282 270" stroke="#cbd5e1" stroke-width="3" stroke-linecap="round" />
+    <path d="M 362 300 Q 312 290 282 300" stroke="#cbd5e1" stroke-width="3" stroke-linecap="round" />
+
+    <!-- Pillar / Scales Center Beam -->
+    <rect x="251" y="90" width="10" height="150" fill="url(#goldGrad)" rx="5" />
+    <!-- Pillar Capital / Base -->
+    <ellipse cx="256" cy="95" rx="28" ry="12" fill="url(#goldGrad)" />
+
+    <!-- Crossbar -->
+    <path d="M 140 120 L 372 120" stroke="url(#goldGrad)" stroke-width="8" stroke-linecap="round" />
+    <circle cx="256" cy="120" r="10" fill="#ffffff" stroke="url(#goldGrad)" stroke-width="4" />
+
+    <!-- Left Pan -->
+    <path d="M 140 120 L 110 180 L 170 180 Z" fill="none" stroke="url(#goldGrad)" stroke-width="3" />
+    <path d="M 90 180 Q 140 210 190 180 Z" fill="url(#goldGrad)" />
+
+    <!-- Right Pan -->
+    <path d="M 372 120 L 342 180 L 402 180 Z" fill="none" stroke="url(#goldGrad)" stroke-width="3" />
+    <path d="M 322 180 Q 372 210 422 180 Z" fill="url(#goldGrad)" />
+
+    <!-- Algeria Star & Crescent Badge -->
+    <circle cx="256" cy="65" r="28" fill="#ffffff" />
+    <!-- Crescent -->
+    <path d="M 264 47 A 18 18 0 1 0 264 83 A 14 14 0 1 1 264 47 Z" fill="#dc2626" />
+    <!-- Red Star -->
+    <polygon points="266,58 270,68 280,68 272,74 275,84 266,78 257,84 260,74 252,68 262,68" fill="#dc2626" transform="scale(0.55) translate(225, 45)" />
+  </g>
+
+  <!-- Bottom Badge: 55 مادة - 9 فصول -->
+  <g transform="translate(256, 435)">
+    <rect x="-140" y="-22" width="280" height="44" rx="22" fill="#0f172a" stroke="url(#goldGrad)" stroke-width="2" />
+    <text x="0" y="7" text-anchor="middle" fill="#ffffff" font-family="'Cairo', sans-serif" font-weight="900" font-size="20">
+      النظام الداخلي الموحد
+    </text>
+  </g>
+</svg>

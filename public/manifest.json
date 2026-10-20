@@ -1,0 +1,52 @@
+{
+  "id": "/",
+  "name": "النظام الداخلي الموحد - ثانوية ابن الهيثم التقنية 2026/2027",
+  "short_name": "النظام الداخلي",
+  "description": "بوابة الفصول الـ 9 والمواد الـ 55 للنظام الداخلي الموحد لمؤسسات التربية والتعليم - ثانوية ابن الهيثم التقنية (محمد بلوزداد) - دليل مبسط واستمارة تعهد",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#f5f5f4",
+  "theme_color": "#047857",
+  "categories": ["education", "books", "productivity"],
+  "icons": [
+    {
+      "src": "/pwa-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/pwa-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/pwa-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "دليل الإشراف الميداني",
+      "short_name": "دليل الإشراف",
+      "description": "بطاقات التدخل السريع والمعالجة الميدانية لمشرفي التربية",
+      "url": "/?tab=supervisor#supervisor",
+      "icons": [
+        {
+          "src": "/pwa-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ]
+}
