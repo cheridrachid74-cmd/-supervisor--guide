@@ -43,6 +43,11 @@
       "url": "/?tab=supervisor#supervisor",
       "icons": [
         {
+          "src": "/supervisor-icon.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
+        },
+        {
           "src": "/pwa-192x192.png",
           "sizes": "192x192"
         }

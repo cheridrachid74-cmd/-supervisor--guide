@@ -244,13 +244,13 @@ export const UnifiedRegulationsPortal: React.FC<UnifiedRegulationsPortalProps> =
               <button
                 onClick={onOpenSupervisorGuide}
                 className="px-3.5 py-1.5 rounded-xl bg-blue-900 hover:bg-blue-800 text-white text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 border border-blue-700/40 cursor-pointer"
-                title="فتح المساعد الذكي للإشراف التربوي - بطاقات التدخل السريع"
+                title="فتح المساعد الذكي للإشراف التربوي - 20 بطاقة للتدخل السريع"
               >
-                <ShieldAlert className="w-3.5 h-3.5 text-sky-300" />
+                <img src="/supervisor-icon.svg" alt="أيقونة الإشراف" className="w-4 h-4 object-contain inline-block rounded-xs" />
                 <span className="hidden sm:inline">دليل الإشراف الميداني</span>
                 <span className="sm:hidden">دليل الإشراف</span>
-                <span className="bg-amber-400 text-stone-900 text-[10px] px-1 py-0.2 rounded-full font-black">
-                  جديد
+                <span className="bg-amber-400 text-stone-900 text-[10px] px-1.5 py-0.2 rounded-full font-black">
+                  20 بطاقة
                 </span>
               </button>
             )}
@@ -295,25 +295,27 @@ export const UnifiedRegulationsPortal: React.FC<UnifiedRegulationsPortalProps> =
                 className="group w-full flex items-center justify-between gap-3 px-4 sm:px-5 py-3 rounded-2xl bg-gradient-to-r from-blue-900 via-blue-800 to-indigo-950 text-white shadow-xl border-2 border-amber-400/80 hover:shadow-2xl hover:border-amber-300 transition-all cursor-pointer text-right"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-amber-400 text-stone-900 flex items-center justify-center font-black text-lg shadow-inner shrink-0 group-hover:scale-105 transition-transform">
-                    🛡️
-                  </div>
+                  <img
+                    src="/supervisor-icon.svg"
+                    alt="أيقونة دليل الإشراف"
+                    className="w-11 h-11 rounded-xl bg-blue-950 p-0.5 shadow-md shrink-0 group-hover:scale-105 transition-transform border border-amber-400/50"
+                  />
                   <div>
                     <div className="flex items-center gap-2 flex-wrap">
                       <span className="text-xs sm:text-sm font-black text-white">
                         دليل الإشراف التربوي الميداني
                       </span>
                       <span className="bg-amber-400 text-stone-900 text-[10px] px-2 py-0.2 rounded-full font-black">
-                        أيقونة وقسم جديد
+                        20 بطاقة كاملة
                       </span>
                     </div>
                     <p className="text-[11px] text-blue-200 font-medium mt-0.5">
-                      بطاقات التدخل السريع والمعالجة الميدانية (12 حالة وحل بيداغوجي وقانوني)
+                      بطاقات التدخل السريع والمعالجة الميدانية (20 معضلة واقعية وحل بيداغوجي وقانوني معتمد)
                     </p>
                   </div>
                 </div>
                 <div className="shrink-0 flex items-center gap-1 text-xs font-bold text-amber-300 bg-white/10 px-3 py-1.5 rounded-xl border border-white/10 group-hover:bg-white/20 transition-colors">
-                  <span>فتح الدليل</span>
+                  <span>فتح الدليل (20 بطاقة)</span>
                   <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform" />
                 </div>
               </button>
@@ -466,19 +468,21 @@ export const UnifiedRegulationsPortal: React.FC<UnifiedRegulationsPortalProps> =
             >
               <div className="absolute top-0 left-0 w-48 h-48 bg-blue-400/10 rounded-full blur-2xl pointer-events-none -translate-x-1/2 -translate-y-1/2" />
               <div className="flex items-center gap-3.5 relative z-10">
-                <div className="w-11 h-11 rounded-2xl bg-blue-700/60 border border-blue-400/40 flex items-center justify-center text-xl shrink-0 group-hover:scale-105 transition-transform shadow-xs">
-                  🛡️
-                </div>
+                <img
+                  src="/supervisor-icon.svg"
+                  alt="أيقونة دليل الإشراف"
+                  className="w-12 h-12 rounded-2xl bg-blue-950 p-1 border border-amber-400/50 shadow-md shrink-0 group-hover:scale-105 transition-transform"
+                />
                 <div>
                   <div className="flex items-center gap-2 mb-1 flex-wrap">
                     <span className="text-xs sm:text-sm font-black text-white">
                       المساعد الذكي للإشراف التربوي الميداني
                     </span>
                     <span className="bg-amber-400 text-stone-900 text-[10px] px-2 py-0.2 rounded-full font-black">
-                      بطاقات التدخل السريع
+                      20 بطاقة معالجة فورية
                     </span>
                     <span className="bg-blue-600/60 text-blue-100 text-[10px] px-2 py-0.2 rounded-full font-bold">
-                      12 معضلة وحل إجرائي
+                      20 معضلة ميدانية وحل إجرائي موثق
                     </span>
                   </div>
                   <p className="text-xs text-blue-100/90 leading-relaxed font-medium">
@@ -487,7 +491,7 @@ export const UnifiedRegulationsPortal: React.FC<UnifiedRegulationsPortalProps> =
                 </div>
               </div>
               <div className="shrink-0 hidden md:flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white/10 group-hover:bg-white/20 text-white text-xs font-bold transition-all border border-white/20 relative z-10">
-                <span>تصفح البطاقات</span>
+                <span>تصفح الـ 20 بطاقة</span>
                 <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
               </div>
             </div>

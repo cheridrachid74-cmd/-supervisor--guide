@@ -29,9 +29,35 @@
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
     <script>
+      // Clear old obsolete caches such as regulations-pwa-v1 to force immediate update to 20 cards
+      if ('caches' in window) {
+        caches.keys().then((keys) => {
+          keys.forEach((key) => {
+            if (key === 'regulations-pwa-v1') {
+              console.log('Clearing old 12-card cache:', key);
+              caches.delete(key);
+            }
+          });
+        });
+      }
+
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/sw.js').catch((err) => {
+          navigator.serviceWorker.register('/sw.js').then((reg) => {
+            // Check for updates immediately
+            reg.update();
+            reg.addEventListener('updatefound', () => {
+              const newWorker = reg.installing;
+              if (newWorker) {
+                newWorker.addEventListener('statechange', () => {
+                  if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                    console.log('New version with 20 cards available! Reloading...');
+                    window.location.reload();
+                  }
+                });
+              }
+            });
+          }).catch((err) => {
             console.log('SW registration error:', err);
           });
         });

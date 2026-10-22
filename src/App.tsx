@@ -92,17 +92,17 @@ export default function App() {
             {/* SUPERVISOR GUIDE PROMINENT HEADER BUTTON */}
             <button
               onClick={() => changeTab('supervisor')}
-              className={`px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-2xl text-xs font-bold transition-all border flex items-center gap-1.5 cursor-pointer shadow-sm ${
+              className={`px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-2xl text-xs font-bold transition-all border flex items-center gap-2 cursor-pointer shadow-sm ${
                 activeTab === 'supervisor'
                   ? 'bg-blue-900 text-white border-blue-700 ring-2 ring-blue-500/50 shadow-md'
                   : 'bg-blue-600 hover:bg-blue-700 text-white border-blue-500 shadow-blue-500/20'
               }`}
-              title="المساعد الذكي للإشراف التربوي - بطاقات التدخل السريع"
+              title="المساعد الذكي للإشراف التربوي - 20 بطاقة للتدخل السريع والمعالجة الميدانية"
             >
-              <ShieldAlert className="w-4 h-4 text-amber-300 animate-pulse" />
-              <span className="font-extrabold text-white">دليل الإشراف الميداني</span>
+              <img src="/supervisor-icon.svg" alt="أيقونة دليل الإشراف" className="w-5 h-5 object-contain rounded-xs drop-shadow" />
+              <span className="font-extrabold text-white">دليل الإشراف الميداني (20 بطاقة)</span>
               <span className="bg-amber-400 text-stone-900 text-[10px] px-1.5 py-0.2 rounded-full font-black">
-                جديد
+                20 بطاقة
               </span>
             </button>
 
@@ -146,10 +146,10 @@ export default function App() {
                   : 'bg-blue-50 text-blue-900 border-blue-200 hover:bg-blue-100 font-black'
               }`}
             >
-              <ShieldAlert className="w-4 h-4 text-blue-600" />
-              <span className="font-black">🛡️ دليل الإشراف الميداني (بطاقات التدخل)</span>
+              <img src="/supervisor-icon.svg" alt="أيقونة دليل الإشراف" className="w-4 h-4 object-contain rounded-xs" />
+              <span className="font-black">دليل الإشراف الميداني (20 بطاقة معالجة)</span>
               <span className="bg-amber-400 text-stone-900 text-[10px] px-2 py-0.5 rounded-full font-black animate-pulse">
-                جديد
+                20 بطاقة
               </span>
             </button>
 
@@ -211,11 +211,13 @@ export default function App() {
           <button
             onClick={() => changeTab('supervisor')}
             className="group flex items-center gap-2.5 bg-gradient-to-r from-blue-900 via-blue-800 to-indigo-900 text-white pl-4 pr-3 py-2.5 rounded-full shadow-2xl border-2 border-amber-400/80 hover:scale-105 active:scale-95 transition-all cursor-pointer"
-            title="انقر لفتح دليل الإشراف التربوي الميداني وبطاقات التدخل السريع"
+            title="انقر لفتح دليل الإشراف التربوي الميداني وبطاقات التدخل السريع (20 بطاقة)"
           >
-            <div className="w-8 h-8 rounded-full bg-amber-400 text-stone-900 flex items-center justify-center font-black text-sm shrink-0 shadow-inner">
-              🛡️
-            </div>
+            <img
+              src="/supervisor-icon.svg"
+              alt="أيقونة دليل الإشراف"
+              className="w-8 h-8 rounded-full border border-amber-400/80 bg-blue-950 p-0.5 object-contain shadow-inner shrink-0"
+            />
             <div className="flex flex-col text-right">
               <div className="flex items-center gap-1.5">
                 <span className="text-xs font-black">دليل الإشراف الميداني</span>
@@ -224,7 +226,7 @@ export default function App() {
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-400"></span>
                 </span>
               </div>
-              <span className="text-[10px] text-blue-200 font-bold">بطاقات التدخل السريع (12 معضلة)</span>
+              <span className="text-[10px] text-amber-300 font-black">بطاقات التدخل السريع (20 معضلة ميدانية)</span>
             </div>
           </button>
         ) : (
@@ -266,18 +268,18 @@ export default function App() {
           }`}
         >
           <div className="relative">
-            <div className={`w-7 h-7 rounded-xl flex items-center justify-center transition-all ${
+            <div className={`w-7 h-7 rounded-xl flex items-center justify-center transition-all overflow-hidden p-0.5 ${
               activeTab === 'supervisor'
-                ? 'bg-blue-900 text-white shadow-md'
-                : 'bg-blue-100 text-blue-900'
+                ? 'bg-blue-900 ring-2 ring-amber-400 shadow-md'
+                : 'bg-blue-100'
             }`}>
-              <ShieldAlert className="w-4 h-4 text-amber-400" />
+              <img src="/supervisor-icon.svg" alt="أيقونة الإشراف" className="w-full h-full object-contain" />
             </div>
             <span className="absolute -top-1 -right-2 bg-amber-400 text-stone-900 text-[8px] font-black px-1 rounded-full animate-bounce">
-              جديد
+              20
             </span>
           </div>
-          <span className="text-[10px] mt-0.5 font-black text-blue-900">دليل الإشراف</span>
+          <span className="text-[10px] mt-0.5 font-black text-blue-900">دليل الإشراف (20)</span>
         </button>
 
         {/* 3. Student Guide */}
