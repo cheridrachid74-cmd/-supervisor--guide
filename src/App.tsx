@@ -3,10 +3,17 @@ import {
   BookOpen,
   FileCheck,
   GraduationCap,
-  ShieldAlert,
+  Scale,
+  FileDown,
   Download,
+  FileText,
+  Menu,
+  X,
+  ChevronRight,
+  ChevronLeft,
   Sparkles,
-  ArrowRight
+  ExternalLink,
+  ShieldCheck
 } from 'lucide-react';
 import { UnifiedRegulationsPortal } from './components/UnifiedRegulationsPortal';
 import { StudentGuide } from './components/StudentGuide';
@@ -14,11 +21,11 @@ import { PledgeFormGenerator } from './components/PledgeFormGenerator';
 import { RegulationPdfDownloadModal } from './components/RegulationPdfDownloadModal';
 import { PWAInstallModal } from './components/PWAInstallModal';
 import { SupervisorFieldGuide } from './components/SupervisorFieldGuide';
+import { Decree171Modal } from './components/Decree171Modal';
 
 type TabType = 'portal' | 'simplified' | 'pledge' | 'supervisor';
 
 export default function App() {
-  // Navigation focused on the essentials of understanding the internal regulations
   const [activeTab, setActiveTab] = useState<TabType>(() => {
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search);
@@ -30,7 +37,11 @@ export default function App() {
     return 'portal';
   });
 
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [showInstallModal, setShowInstallModal] = useState(false);
+  const [showDecree171Modal, setShowDecree171Modal] = useState(false);
+  const [showPdfModal, setShowPdfModal] = useState(false);
 
   // Sync tab with URL hash for easy sharing and direct linking
   useEffect(() => {
@@ -48,304 +59,436 @@ export default function App() {
 
   const changeTab = (tab: TabType) => {
     setActiveTab(tab);
+    setIsSidebarOpen(false); // Close mobile drawer on navigation
     window.location.hash = tab === 'portal' ? '' : tab;
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const getTabLabel = (tab: TabType) => {
+    switch (tab) {
+      case 'portal':
+        return 'الفصول الـ 9 والمواد الـ 55 الرسمية';
+      case 'supervisor':
+        return 'دليل الإشراف الميداني (20 بطاقة معالجة)';
+      case 'simplified':
+        return 'دليل التلميذ المبسط وقاموس المصطلحات';
+      case 'pledge':
+        return 'استمارة التعهد والالتزام المدرسي';
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-stone-100 text-stone-900 flex flex-col font-['Cairo',sans-serif]">
-      {/* Top Application Header */}
-      <header className="bg-white border-b border-stone-200 sticky top-0 z-40 shadow-xs">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-2.5 sm:py-3 flex items-center justify-between gap-2 sm:gap-3 flex-wrap">
-          {/* Logo & School Title */}
-          <div className="flex items-center gap-2.5 sm:gap-3">
-            <div 
-              onClick={() => changeTab('portal')}
-              className="w-10 h-10 rounded-2xl bg-gradient-to-br from-emerald-600 to-emerald-800 text-white flex items-center justify-center shadow-md shadow-emerald-700/20 shrink-0 font-bold text-lg cursor-pointer hover:scale-105 transition-transform"
-              title="العودة للصفحة الرئيسية"
-            >
+    <div dir="rtl" className="h-screen w-screen flex overflow-hidden bg-stone-100 text-stone-900 font-['Cairo',sans-serif]">
+      {/* =========================================================================
+          DESKTOP & MOBILE SIDEBAR NAVIGATION
+          ========================================================================= */}
+      
+      {/* Mobile Backdrop Overlay */}
+      {isSidebarOpen && (
+        <div
+          className="fixed inset-0 bg-stone-950/60 z-40 lg:hidden backdrop-blur-xs transition-opacity duration-200"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
+
+      {/* Main Sidebar Element */}
+      <aside
+        className={`fixed lg:static inset-y-0 right-0 z-50 flex flex-col bg-white border-l border-stone-200/90 shadow-lg lg:shadow-none transition-all duration-300 ease-in-out ${
+          isSidebarOpen ? 'translate-x-0' : 'translate-x-full lg:translate-x-0'
+        } ${isSidebarCollapsed ? 'lg:w-20' : 'w-72 sm:w-80 lg:w-72'}`}
+      >
+        {/* Sidebar Header / Institution Branding */}
+        <div className="p-4 border-b border-stone-200/80 flex items-center justify-between shrink-0 bg-stone-50/60">
+          <div
+            onClick={() => changeTab('portal')}
+            className={`flex items-center gap-3 cursor-pointer group ${isSidebarCollapsed ? 'lg:justify-center lg:w-full' : ''}`}
+            title="ثانوية ابن الهيثم التقنية - محمد بلوزداد"
+          >
+            <div className="w-10 h-10 rounded-xl bg-emerald-700 text-white flex items-center justify-center text-lg font-bold shadow-xs shrink-0 group-hover:bg-emerald-800 transition-colors">
               🇩🇿
             </div>
-            <div>
-              <div className="flex items-center gap-2 flex-wrap">
-                <h1 
-                  onClick={() => changeTab('portal')}
-                  className="text-sm sm:text-base font-black text-stone-900 leading-tight cursor-pointer hover:text-emerald-700 transition-colors"
-                >
-                  النظام الداخلي الموحد
-                </h1>
-                <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200">
+            {!isSidebarCollapsed && (
+              <div className="overflow-hidden leading-tight">
+                <h1 className="text-sm font-black text-stone-900 group-hover:text-emerald-700 transition-colors truncate">
                   ثانوية ابن الهيثم التقنية
-                </span>
-                <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-stone-100 text-stone-700 border border-stone-200 hidden md:inline">
-                  2026 / 2027
-                </span>
+                </h1>
+                <p className="text-[11px] text-stone-500 font-medium truncate mt-0.5">
+                  النظام الداخلي الموحد • 2026/2027
+                </p>
               </div>
-              <p className="text-[11px] text-stone-500 font-medium hidden sm:block">
-                بوابة الفصول الـ 9 والمواد الـ 55 • دليل الإشراف الميداني واستمارة التعهد
+            )}
+          </div>
+
+          {/* Desktop Collapse Toggle / Mobile Close Button */}
+          <div className="flex items-center gap-1">
+            <button
+              onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
+              className="hidden lg:flex p-1.5 rounded-lg text-stone-400 hover:text-stone-700 hover:bg-stone-200/60 transition-colors cursor-pointer"
+              title={isSidebarCollapsed ? 'توسيع القائمة الجانبية' : 'طي القائمة الجانبية'}
+            >
+              {isSidebarCollapsed ? <ChevronLeft className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
+            </button>
+            <button
+              onClick={() => setIsSidebarOpen(false)}
+              className="lg:hidden p-1.5 rounded-lg text-stone-400 hover:text-stone-700 hover:bg-stone-200/60 transition-colors cursor-pointer"
+              title="إغلاق القائمة"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
+
+        {/* Sidebar Navigation Links (Scrollable) */}
+        <div className="flex-1 overflow-y-auto p-3 space-y-6 scrollbar-thin">
+          {/* Main Portals Group */}
+          <div>
+            {!isSidebarCollapsed && (
+              <span className="text-[10px] font-bold tracking-wider text-stone-400 uppercase px-3 block mb-2">
+                بوابات النظام والدلائل
+              </span>
+            )}
+            <nav className="space-y-1">
+              {/* 1. Portal Tab */}
+              <button
+                onClick={() => changeTab('portal')}
+                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                  activeTab === 'portal'
+                    ? 'bg-emerald-700 text-white shadow-xs font-black'
+                    : 'text-stone-700 hover:bg-stone-100 hover:text-stone-950'
+                } ${isSidebarCollapsed ? 'lg:justify-center' : ''}`}
+                title="الفصول الـ 9 والمواد الـ 55 للنظام الداخلي الموحد"
+              >
+                <BookOpen className={`w-4 h-4 shrink-0 ${activeTab === 'portal' ? 'text-white' : 'text-emerald-700'}`} />
+                {!isSidebarCollapsed && (
+                  <div className="flex-1 flex items-center justify-between text-right">
+                    <span>الفصول الـ 9 الرسمية</span>
+                    <span className={`text-[10px] px-1.5 py-0.2 rounded-md ${activeTab === 'portal' ? 'bg-white/20 text-white' : 'bg-stone-100 text-stone-600'}`}>
+                      55 مادة
+                    </span>
+                  </div>
+                )}
+              </button>
+
+              {/* 2. Supervisor Field Guide Tab */}
+              <button
+                onClick={() => changeTab('supervisor')}
+                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                  activeTab === 'supervisor'
+                    ? 'bg-blue-900 text-white shadow-xs font-black ring-1 ring-blue-700'
+                    : 'text-stone-700 hover:bg-stone-100 hover:text-stone-950'
+                } ${isSidebarCollapsed ? 'lg:justify-center' : ''}`}
+                title="دليل الإشراف الميداني - 20 بطاقة للتدخل السريع والمعالجة"
+              >
+                <img
+                  src="/supervisor-icon.svg"
+                  alt="أيقونة دليل الإشراف"
+                  className="w-4 h-4 shrink-0 object-contain rounded-xs"
+                />
+                {!isSidebarCollapsed && (
+                  <div className="flex-1 flex items-center justify-between text-right">
+                    <span>دليل الإشراف الميداني</span>
+                    <span className={`text-[10px] font-black px-1.5 py-0.2 rounded-md ${activeTab === 'supervisor' ? 'bg-amber-400 text-stone-950' : 'bg-blue-100 text-blue-900'}`}>
+                      20 بطاقة
+                    </span>
+                  </div>
+                )}
+              </button>
+
+              {/* 3. Decree 171 Sanctions Modal */}
+              <button
+                onClick={() => {
+                  setShowDecree171Modal(true);
+                  setIsSidebarOpen(false);
+                }}
+                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer text-stone-700 hover:bg-stone-100 hover:text-stone-950 ${
+                  isSidebarCollapsed ? 'lg:justify-center' : ''
+                }`}
+                title="سلّم تصنيف أخطاء التلاميذ والعقوبات (القرار 171)"
+              >
+                <Scale className="w-4 h-4 shrink-0 text-amber-600" />
+                {!isSidebarCollapsed && (
+                  <div className="flex-1 flex items-center justify-between text-right">
+                    <span>سلّم العقوبات (القرار 171)</span>
+                    <span className="text-[10px] px-1.5 py-0.2 rounded-md bg-stone-100 text-stone-600">
+                      4 درجات
+                    </span>
+                  </div>
+                )}
+              </button>
+
+              {/* 4. Student Guide Tab */}
+              <button
+                onClick={() => changeTab('simplified')}
+                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                  activeTab === 'simplified'
+                    ? 'bg-emerald-700 text-white shadow-xs font-black'
+                    : 'text-stone-700 hover:bg-stone-100 hover:text-stone-950'
+                } ${isSidebarCollapsed ? 'lg:justify-center' : ''}`}
+                title="دليل التلميذ المبسط وقاموس المصطلحات والاختبار"
+              >
+                <GraduationCap className={`w-4 h-4 shrink-0 ${activeTab === 'simplified' ? 'text-white' : 'text-emerald-700'}`} />
+                {!isSidebarCollapsed && (
+                  <div className="flex-1 flex items-center justify-between text-right">
+                    <span>دليل التلميذ المبسط</span>
+                    <span className={`text-[10px] px-1.5 py-0.2 rounded-md ${activeTab === 'simplified' ? 'bg-white/20 text-white' : 'bg-stone-100 text-stone-600'}`}>
+                      قاموس وشرح
+                    </span>
+                  </div>
+                )}
+              </button>
+
+              {/* 5. Pledge Form Tab */}
+              <button
+                onClick={() => changeTab('pledge')}
+                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                  activeTab === 'pledge'
+                    ? 'bg-emerald-700 text-white shadow-xs font-black'
+                    : 'text-stone-700 hover:bg-stone-100 hover:text-stone-950'
+                } ${isSidebarCollapsed ? 'lg:justify-center' : ''}`}
+                title="استمارة التعهد والالتزام وترخيص الأنشطة"
+              >
+                <FileCheck className={`w-4 h-4 shrink-0 ${activeTab === 'pledge' ? 'text-white' : 'text-amber-600'}`} />
+                {!isSidebarCollapsed && (
+                  <div className="flex-1 flex items-center justify-between text-right">
+                    <span>استمارة التعهد والالتزام</span>
+                    <span className={`text-[10px] px-1.5 py-0.2 rounded-md ${activeTab === 'pledge' ? 'bg-white/20 text-white' : 'bg-stone-100 text-stone-600'}`}>
+                      طباعة
+                    </span>
+                  </div>
+                )}
+              </button>
+            </nav>
+          </div>
+
+          {/* Quick Tools & Downloads Group */}
+          <div>
+            {!isSidebarCollapsed && (
+              <span className="text-[10px] font-bold tracking-wider text-stone-400 uppercase px-3 block mb-2">
+                الأدوات والتحميل الرسمي
+              </span>
+            )}
+            <nav className="space-y-1">
+              {/* PDF Document Modal Trigger */}
+              <button
+                onClick={() => {
+                  setShowPdfModal(true);
+                  setIsSidebarOpen(false);
+                }}
+                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold text-stone-700 hover:bg-stone-100 hover:text-stone-950 transition-colors cursor-pointer ${
+                  isSidebarCollapsed ? 'lg:justify-center' : ''
+                }`}
+                title="تحميل وثيقة ملخصات وخطب القانون الداخلي بصيغة PDF أو طباعتها"
+              >
+                <FileDown className="w-4 h-4 text-red-600 shrink-0" />
+                {!isSidebarCollapsed && (
+                  <div className="flex-1 flex items-center justify-between text-right">
+                    <span>تحميل النظام بصيغة PDF</span>
+                    <span className="text-[10px] px-1.5 py-0.2 rounded-md bg-red-50 text-red-700 border border-red-200">
+                      طباعة
+                    </span>
+                  </div>
+                )}
+              </button>
+
+              {/* Standalone HTML Guide Link */}
+              <a
+                href="/supervisor.html"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold text-stone-700 hover:bg-stone-100 hover:text-stone-950 transition-colors ${
+                  isSidebarCollapsed ? 'lg:justify-center' : ''
+                }`}
+                title="فتح النسخة المستقلة الخفيفة بـ 20 بطاقة (صفحة HTML خفيفة لا تتطلب إنترنت)"
+              >
+                <FileText className="w-4 h-4 text-blue-600 shrink-0" />
+                {!isSidebarCollapsed && (
+                  <div className="flex-1 flex items-center justify-between text-right">
+                    <span>النسخة المستقلة HTML</span>
+                    <ExternalLink className="w-3.5 h-3.5 text-stone-400" />
+                  </div>
+                )}
+              </a>
+
+              {/* PWA Install Trigger */}
+              <button
+                onClick={() => {
+                  setShowInstallModal(true);
+                  setIsSidebarOpen(false);
+                }}
+                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold text-stone-700 hover:bg-stone-100 hover:text-stone-950 transition-colors cursor-pointer ${
+                  isSidebarCollapsed ? 'lg:justify-center' : ''
+                }`}
+                title="تثبيت التطبيق على جهاز الكمبيوتر أو الهاتف الذكي"
+              >
+                <Download className="w-4 h-4 text-emerald-600 shrink-0" />
+                {!isSidebarCollapsed && (
+                  <div className="flex-1 flex items-center justify-between text-right">
+                    <span>تثبيت التطبيق على الجهاز</span>
+                    <span className="text-[10px] px-1.5 py-0.2 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-200">
+                      PWA
+                    </span>
+                  </div>
+                )}
+              </button>
+            </nav>
+          </div>
+        </div>
+
+        {/* Sidebar Footer with Required Copyright Notice */}
+        <div className="p-3.5 border-t border-stone-200/80 bg-stone-50 text-right shrink-0">
+          {!isSidebarCollapsed ? (
+            <div className="space-y-1 text-[11px] text-stone-500">
+              <div className="flex items-center gap-1.5 text-stone-700 font-bold">
+                <ShieldCheck className="w-3.5 h-3.5 text-emerald-700 shrink-0" />
+                <span>جميع الحقوق محفوظة © 2026/2027</span>
+              </div>
+              <p className="text-stone-600 font-medium leading-tight">
+                ثانوية ابن الهيثم التقنية • محمد بلوزداد
+              </p>
+              <p className="text-stone-400 text-[10px]">
+                إعداد وتنسيق: المشرف التربوي ش. رشيد
               </p>
             </div>
-          </div>
-
-          {/* Action triggers: Field Guide + Install PWA + PDF Download */}
-          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
-            {/* SUPERVISOR GUIDE PROMINENT HEADER BUTTON */}
-            <button
-              onClick={() => changeTab('supervisor')}
-              className={`px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-2xl text-xs font-bold transition-all border flex items-center gap-2 cursor-pointer shadow-sm ${
-                activeTab === 'supervisor'
-                  ? 'bg-blue-900 text-white border-blue-700 ring-2 ring-blue-500/50 shadow-md'
-                  : 'bg-blue-600 hover:bg-blue-700 text-white border-blue-500 shadow-blue-500/20'
-              }`}
-              title="المساعد الذكي للإشراف التربوي - 20 بطاقة للتدخل السريع والمعالجة الميدانية"
-            >
-              <img src="/supervisor-icon.svg" alt="أيقونة دليل الإشراف" className="w-5 h-5 object-contain rounded-xs drop-shadow" />
-              <span className="font-extrabold text-white">دليل الإشراف الميداني (20 بطاقة)</span>
-              <span className="bg-amber-400 text-stone-900 text-[10px] px-1.5 py-0.2 rounded-full font-black">
-                20 بطاقة
-              </span>
-            </button>
-
-            <button
-              onClick={() => setShowInstallModal(true)}
-              className="px-2.5 py-1.5 sm:px-3.5 sm:py-2 rounded-2xl bg-emerald-800 hover:bg-emerald-700 text-white text-xs font-bold transition-all shadow-md shadow-emerald-900/20 border border-emerald-600/40 flex items-center gap-1 cursor-pointer"
-              title="تثبيت التطبيق على هاتفك بنقرة واحدة"
-            >
-              <Download className="w-3.5 h-3.5 text-amber-300" />
-              <span className="hidden sm:inline">تثبيت التطبيق</span>
-              <span className="sm:hidden text-[11px]">تثبيت</span>
-            </button>
-            <RegulationPdfDownloadModal buttonVariant="header" />
-          </div>
+          ) : (
+            <div className="text-center font-bold text-[10px] text-stone-400" title="جميع الحقوق محفوظة © 2026/2027">
+              © 2027
+            </div>
+          )}
         </div>
-
-        {/* Main Navigation Tabs: Essential Pillars of Understanding the Law */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <nav className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-2 scrollbar-none text-xs sm:text-sm font-bold">
-            {/* Tab 1: The 9 Chapters Portal (Default & Main) */}
-            <button
-              id="nav-tab-portal"
-              onClick={() => changeTab('portal')}
-              className={`py-2 px-3.5 rounded-xl flex items-center gap-2 transition-all whitespace-nowrap cursor-pointer shrink-0 ${
-                activeTab === 'portal'
-                  ? 'bg-emerald-700 text-white shadow-xs'
-                  : 'text-stone-600 hover:text-stone-900 hover:bg-stone-100'
-              }`}
-            >
-              <BookOpen className="w-4 h-4 text-amber-300" />
-              <span className="font-black">الفصول الـ 9 الرسمية (المواد 01-55)</span>
-            </button>
-
-            {/* Tab 2: Supervisor Field Guide (The Requested Feature) */}
-            <button
-              id="nav-tab-supervisor"
-              onClick={() => changeTab('supervisor')}
-              className={`py-2 px-3.5 rounded-xl flex items-center gap-2 transition-all whitespace-nowrap cursor-pointer shrink-0 border ${
-                activeTab === 'supervisor'
-                  ? 'bg-blue-900 text-white border-blue-700 shadow-md ring-2 ring-blue-400/40'
-                  : 'bg-blue-50 text-blue-900 border-blue-200 hover:bg-blue-100 font-black'
-              }`}
-            >
-              <img src="/supervisor-icon.svg" alt="أيقونة دليل الإشراف" className="w-4 h-4 object-contain rounded-xs" />
-              <span className="font-black">دليل الإشراف الميداني (20 بطاقة معالجة)</span>
-              <span className="bg-amber-400 text-stone-900 text-[10px] px-2 py-0.5 rounded-full font-black animate-pulse">
-                20 بطاقة
-              </span>
-            </button>
-
-            {/* Tab 3: Simplified Summary & Vocabulary */}
-            <button
-              id="nav-tab-simplified"
-              onClick={() => changeTab('simplified')}
-              className={`py-2 px-3.5 rounded-xl flex items-center gap-2 transition-all whitespace-nowrap cursor-pointer shrink-0 ${
-                activeTab === 'simplified'
-                  ? 'bg-emerald-700 text-white shadow-xs'
-                  : 'text-stone-600 hover:text-stone-900 hover:bg-stone-100'
-              }`}
-            >
-              <GraduationCap className="w-4 h-4 text-emerald-400" />
-              <span>الملخص السهل والمبسط وقاموس الكلمات</span>
-            </button>
-
-            {/* Tab 4: Pledge Form */}
-            <button
-              id="nav-tab-pledge"
-              onClick={() => changeTab('pledge')}
-              className={`py-2 px-3.5 rounded-xl flex items-center gap-2 transition-all whitespace-nowrap cursor-pointer shrink-0 ${
-                activeTab === 'pledge'
-                  ? 'bg-emerald-700 text-white shadow-xs'
-                  : 'text-stone-600 hover:text-stone-900 hover:bg-stone-100'
-              }`}
-            >
-              <FileCheck className="w-4 h-4 text-amber-400" />
-              <span>استمارة التعهد وترخيص الأنشطة</span>
-            </button>
-          </nav>
-        </div>
-      </header>
-
-      {/* Main Content Area (padding-bottom for mobile bottom navigation bar) */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 pb-28 md:pb-12 flex-1 w-full">
-        {/* TAB 1: PORTAL (The 9 Chapters and 55 Articles with Search and Audio) */}
-        {activeTab === 'portal' && (
-          <UnifiedRegulationsPortal onOpenSupervisorGuide={() => changeTab('supervisor')} />
-        )}
-
-        {/* TAB 2: SUPERVISOR FIELD GUIDE (Dedicated Section) */}
-        {activeTab === 'supervisor' && (
-          <SupervisorFieldGuide onBackToPortal={() => changeTab('portal')} />
-        )}
-
-        {/* TAB 3: SIMPLIFIED SUMMARY & VOCABULARY & QUIZ */}
-        {activeTab === 'simplified' && <StudentGuide />}
-
-        {/* TAB 4: PLEDGE FORM GENERATOR */}
-        {activeTab === 'pledge' && <PledgeFormGenerator />}
-      </main>
+      </aside>
 
       {/* =========================================================================
-          PERMANENT FLOATING ACTION BUTTON (ALWAYS VISIBLE TO JUMP DIRECTLY TO GUIDE)
+          MAIN WORKSPACE CANVAS & TOP APPLICATION BAR
           ========================================================================= */}
-      <div className="fixed bottom-20 md:bottom-6 left-4 z-40 print:hidden">
-        {activeTab !== 'supervisor' ? (
-          <button
-            onClick={() => changeTab('supervisor')}
-            className="group flex items-center gap-2.5 bg-gradient-to-r from-blue-900 via-blue-800 to-indigo-900 text-white pl-4 pr-3 py-2.5 rounded-full shadow-2xl border-2 border-amber-400/80 hover:scale-105 active:scale-95 transition-all cursor-pointer"
-            title="انقر لفتح دليل الإشراف التربوي الميداني وبطاقات التدخل السريع (20 بطاقة)"
-          >
-            <img
-              src="/supervisor-icon.svg"
-              alt="أيقونة دليل الإشراف"
-              className="w-8 h-8 rounded-full border border-amber-400/80 bg-blue-950 p-0.5 object-contain shadow-inner shrink-0"
-            />
-            <div className="flex flex-col text-right">
-              <div className="flex items-center gap-1.5">
-                <span className="text-xs font-black">دليل الإشراف الميداني</span>
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-400"></span>
+      <div className="flex-1 flex flex-col h-screen overflow-hidden">
+        {/* Sleek Institutional Top Bar */}
+        <header className="h-14 sm:h-16 bg-white border-b border-stone-200/80 px-4 sm:px-6 flex items-center justify-between gap-3 shrink-0 z-30 shadow-2xs">
+          {/* Right Area: Hamburger Button (mobile) & Active Breadcrumb */}
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => setIsSidebarOpen(true)}
+              className="lg:hidden p-2 rounded-xl text-stone-600 hover:text-stone-900 hover:bg-stone-100 transition-colors cursor-pointer"
+              title="فتح القائمة الرئيسية"
+              aria-label="القائمة الرئيسية"
+            >
+              <Menu className="w-5 h-5" />
+            </button>
+
+            <div className="flex items-center gap-2 text-xs sm:text-sm font-bold text-stone-700">
+              <span className="hidden sm:inline text-stone-500">البوابة الرسمية</span>
+              <span className="hidden sm:inline text-stone-300">/</span>
+              <span className="text-stone-900 font-black truncate max-w-[220px] sm:max-w-md">
+                {getTabLabel(activeTab)}
+              </span>
+            </div>
+          </div>
+
+          {/* Left Area: Year Badge & Quick Action Triggers */}
+          <div className="flex items-center gap-2 shrink-0">
+            {/* Quick Context Switcher: Jump between 9 Chapters and 20 Cards easily */}
+            {activeTab !== 'supervisor' ? (
+              <button
+                onClick={() => changeTab('supervisor')}
+                className="px-3 py-1.5 rounded-xl bg-blue-900 hover:bg-blue-800 text-white text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer"
+                title="الانتقال إلى دليل الإشراف الميداني (20 بطاقة)"
+              >
+                <img src="/supervisor-icon.svg" alt="أيقونة دليل الإشراف" className="w-3.5 h-3.5 object-contain" />
+                <span className="hidden md:inline font-extrabold">دليل الإشراف (20 بطاقة)</span>
+                <span className="md:hidden text-[11px] font-extrabold">دليل الإشراف</span>
+              </button>
+            ) : (
+              <button
+                onClick={() => changeTab('portal')}
+                className="px-3 py-1.5 rounded-xl bg-stone-900 hover:bg-stone-800 text-white text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer"
+                title="العودة إلى الفصول الـ 9 الرسمية"
+              >
+                <BookOpen className="w-3.5 h-3.5 text-emerald-400" />
+                <span className="text-[11px] sm:text-xs">الفصول الـ 9</span>
+              </button>
+            )}
+
+            {/* Quick PDF Trigger in Header */}
+            <button
+              onClick={() => setShowPdfModal(true)}
+              className="hidden sm:flex px-3 py-1.5 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-800 text-xs font-bold transition-colors items-center gap-1.5 cursor-pointer border border-stone-200/80"
+              title="تحميل وطباعة النظام بصيغة PDF"
+            >
+              <FileDown className="w-3.5 h-3.5 text-red-600" />
+              <span>تحميل PDF</span>
+            </button>
+
+            {/* School Season Badge */}
+            <span className="text-[11px] sm:text-xs font-bold px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-800 border border-emerald-200">
+              2026/2027
+            </span>
+          </div>
+        </header>
+
+        {/* Scrollable Main Content Container */}
+        <main className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 scrollbar-thin">
+          <div className="max-w-6xl mx-auto space-y-8">
+            {/* TAB 1: PORTAL (The 9 Chapters and 55 Articles with Search and Audio) */}
+            {activeTab === 'portal' && (
+              <UnifiedRegulationsPortal onOpenSupervisorGuide={() => changeTab('supervisor')} />
+            )}
+
+            {/* TAB 2: SUPERVISOR FIELD GUIDE (Dedicated Section with 20 Cards) */}
+            {activeTab === 'supervisor' && (
+              <SupervisorFieldGuide onBackToPortal={() => changeTab('portal')} />
+            )}
+
+            {/* TAB 3: SIMPLIFIED SUMMARY & VOCABULARY & QUIZ */}
+            {activeTab === 'simplified' && <StudentGuide />}
+
+            {/* TAB 4: PLEDGE FORM GENERATOR */}
+            {activeTab === 'pledge' && <PledgeFormGenerator />}
+
+            {/* Official Institutional Document Footer */}
+            <footer className="pt-8 pb-4 border-t border-stone-200 text-xs text-stone-500 space-y-3 print:hidden">
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-right">
+                <p className="font-bold text-stone-800">
+                  الجمهورية الجزائرية الديمقراطية الشعبية • وزارة التربية الوطنية • ثانوية ابن الهيثم التقنية (محمد بلوزداد)
+                </p>
+                <p className="text-stone-500 font-semibold">
+                  النظام الداخلي الموحد ودليل الإشراف التربوي الميداني • 2026 / 2027
+                </p>
+              </div>
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-right border-t border-stone-200/60 pt-3">
+                <div className="flex items-center gap-2 flex-wrap justify-center sm:justify-start">
+                  <span className="px-2.5 py-0.5 rounded-md bg-stone-900 text-white font-bold text-[11px]">
+                    جميع الحقوق محفوظة © 2026/2027
+                  </span>
+                  <span className="text-stone-600 font-bold text-[11px]">
+                    إعداد وتصميم وتنسيق: المشرف التربوي ش. رشيد
+                  </span>
+                </div>
+                <span className="text-[11px] text-stone-400">
+                  المرجع المعتمد: القرار الوزاري رقم 778/65 والمرسوم التنفيذي 26-77 والقرار 171
                 </span>
               </div>
-              <span className="text-[10px] text-amber-300 font-black">بطاقات التدخل السريع (20 معضلة ميدانية)</span>
-            </div>
-          </button>
-        ) : (
-          <button
-            onClick={() => changeTab('portal')}
-            className="group flex items-center gap-2 bg-stone-900/90 hover:bg-stone-900 text-white px-4 py-2.5 rounded-full shadow-xl border border-stone-700 hover:scale-105 active:scale-95 transition-all cursor-pointer text-xs font-bold"
-            title="العودة لبوابة الفصول الـ 9"
-          >
-            <BookOpen className="w-4 h-4 text-emerald-400" />
-            <span>العودة للفصول الـ 9</span>
-          </button>
-        )}
+            </footer>
+          </div>
+        </main>
       </div>
 
       {/* =========================================================================
-          FIXED MOBILE BOTTOM NAVIGATION BAR (FOR EASY ACCESS ON SMARTPHONES)
+          GLOBAL MODALS (CONTROLLED FROM SIDEBAR & TOP ACTIONS)
           ========================================================================= */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-t border-stone-200 shadow-2xl py-1 px-2 flex items-center justify-around print:hidden safe-area-bottom">
-        {/* 1. Portal Tab */}
-        <button
-          onClick={() => changeTab('portal')}
-          className={`flex flex-col items-center py-1 px-2 rounded-xl transition-colors cursor-pointer ${
-            activeTab === 'portal'
-              ? 'text-emerald-700 font-black'
-              : 'text-stone-500 hover:text-stone-800'
-          }`}
-        >
-          <BookOpen className={`w-5 h-5 ${activeTab === 'portal' ? 'text-emerald-700 stroke-[2.5]' : 'text-stone-400'}`} />
-          <span className="text-[10px] mt-0.5">الفصول الـ 9</span>
-        </button>
+      
+      {/* 1. Decree 171 Infractions Scale Reference Modal */}
+      <Decree171Modal
+        isOpen={showDecree171Modal}
+        onClose={() => setShowDecree171Modal(false)}
+      />
 
-        {/* 2. SUPERVISOR GUIDE (PROMINENT & HIGHLIGHTED) */}
-        <button
-          onClick={() => changeTab('supervisor')}
-          className={`relative flex flex-col items-center py-1 px-2 rounded-xl transition-colors cursor-pointer ${
-            activeTab === 'supervisor'
-              ? 'text-blue-900 font-black'
-              : 'text-blue-700 font-extrabold'
-          }`}
-        >
-          <div className="relative">
-            <div className={`w-7 h-7 rounded-xl flex items-center justify-center transition-all overflow-hidden p-0.5 ${
-              activeTab === 'supervisor'
-                ? 'bg-blue-900 ring-2 ring-amber-400 shadow-md'
-                : 'bg-blue-100'
-            }`}>
-              <img src="/supervisor-icon.svg" alt="أيقونة الإشراف" className="w-full h-full object-contain" />
-            </div>
-            <span className="absolute -top-1 -right-2 bg-amber-400 text-stone-900 text-[8px] font-black px-1 rounded-full animate-bounce">
-              20
-            </span>
-          </div>
-          <span className="text-[10px] mt-0.5 font-black text-blue-900">دليل الإشراف (20)</span>
-        </button>
+      {/* 2. Official PDF Document Export Modal */}
+      <RegulationPdfDownloadModal
+        buttonVariant="none"
+        isOpenControlled={showPdfModal}
+        onCloseControlled={() => setShowPdfModal(false)}
+      />
 
-        {/* 3. Student Guide */}
-        <button
-          onClick={() => changeTab('simplified')}
-          className={`flex flex-col items-center py-1 px-2 rounded-xl transition-colors cursor-pointer ${
-            activeTab === 'simplified'
-              ? 'text-emerald-700 font-black'
-              : 'text-stone-500 hover:text-stone-800'
-          }`}
-        >
-          <GraduationCap className={`w-5 h-5 ${activeTab === 'simplified' ? 'text-emerald-700 stroke-[2.5]' : 'text-stone-400'}`} />
-          <span className="text-[10px] mt-0.5">دليل التلميذ</span>
-        </button>
-
-        {/* 4. Pledge Form */}
-        <button
-          onClick={() => changeTab('pledge')}
-          className={`flex flex-col items-center py-1 px-2 rounded-xl transition-colors cursor-pointer ${
-            activeTab === 'pledge'
-              ? 'text-emerald-700 font-black'
-              : 'text-stone-500 hover:text-stone-800'
-          }`}
-        >
-          <FileCheck className={`w-5 h-5 ${activeTab === 'pledge' ? 'text-emerald-700 stroke-[2.5]' : 'text-stone-400'}`} />
-          <span className="text-[10px] mt-0.5">التعهد</span>
-        </button>
-
-        {/* 5. Install Button */}
-        <button
-          onClick={() => setShowInstallModal(true)}
-          className="flex flex-col items-center py-1 px-2 rounded-xl text-stone-600 hover:text-emerald-700 cursor-pointer"
-        >
-          <Download className="w-5 h-5 text-emerald-600" />
-          <span className="text-[10px] mt-0.5 font-bold">تثبيت</span>
-        </button>
-      </nav>
-
-      {/* Global Official Footer with Copyright Notice */}
-      <footer className="bg-white border-t border-stone-200 py-5 pb-24 md:pb-5 text-xs text-stone-500 print:hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col gap-2.5">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-right">
-            <p className="font-bold text-stone-800">
-              الجمهورية الجزائرية الديمقراطية الشعبية • وزارة التربية الوطنية • ثانوية ابن الهيثم التقنية (محمد بلوزداد)
-            </p>
-            <p className="text-stone-500 font-semibold">
-              النظام الداخلي الموحد ودليل الإشراف التربوي الميداني • الموسم الدراسي 2026 / 2027
-            </p>
-          </div>
-          <div className="pt-2.5 border-t border-stone-100 flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-right">
-            <div className="flex items-center gap-2 flex-wrap justify-center sm:justify-start">
-              <span className="px-3 py-1 rounded-full bg-stone-900 text-amber-300 font-black text-[11px] shadow-2xs">
-                © جميع الحقوق محفوظة 2026 / 2027
-              </span>
-              <span className="text-stone-600 font-bold text-[11px]">
-                إعداد وتصميم وتنسيق: المشرف التربوي ش. رشيد
-              </span>
-            </div>
-            <span className="text-[11px] text-stone-400 font-medium">
-              النسخة الرقمية الرسمية المعتمدة لمصلحة التلميذ والولي والأسرة التربوية
-            </span>
-          </div>
-        </div>
-      </footer>
-
-      {/* Modern PWA Install Modal */}
+      {/* 3. PWA Install Modal */}
       <PWAInstallModal
         isOpen={showInstallModal}
         onClose={() => setShowInstallModal(false)}

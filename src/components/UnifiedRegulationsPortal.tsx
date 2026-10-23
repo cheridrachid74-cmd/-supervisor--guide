@@ -221,103 +221,65 @@ export const UnifiedRegulationsPortal: React.FC<UnifiedRegulationsPortalProps> =
 
   return (
     <div className="flex flex-col gap-6 w-full max-w-7xl mx-auto">
-      {/* ================= Institutional Header & Algeria Theme ================= */}
-      <div className="bg-gradient-to-b from-sky-400/25 via-emerald-50/20 to-stone-100 rounded-3xl p-5 sm:p-7 border border-stone-200/80 shadow-xs relative overflow-hidden">
+      {/* ================= Institutional Header & Legal Framework ================= */}
+      <div className="bg-white rounded-3xl p-5 sm:p-7 border border-stone-200/90 shadow-xs relative overflow-hidden">
         {/* Top Republic Bar */}
-        <div className="flex items-center justify-between gap-4 pb-4 border-b border-stone-200/80">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-stone-100">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-white border border-stone-200 flex items-center justify-center text-xl shadow-xs shrink-0">
+            <div className="w-10 h-10 rounded-2xl bg-emerald-700 text-white flex items-center justify-center text-lg font-bold shadow-xs shrink-0">
               🇩🇿
             </div>
             <div>
-              <span className="text-[11px] sm:text-xs font-black text-emerald-900 block leading-tight">
-                الجمهورية الجزائرية الديمقراطية الشعبية
+              <span className="text-[11px] sm:text-xs font-bold text-stone-600 block leading-tight">
+                الجمهورية الجزائرية الديمقراطية الشعبية • وزارة التربية الوطنية
               </span>
-              <span className="text-xs sm:text-sm font-bold text-emerald-800 block">
-                وزارة التربية الوطنية
+              <span className="text-xs sm:text-sm font-black text-stone-900 block mt-0.5">
+                ثانوية ابن الهيثم التقنية (محمد بلوزداد) • مصلحة الاستشارة التربوية
               </span>
             </div>
           </div>
 
-          <div className="flex items-center gap-2 flex-wrap sm:flex-nowrap">
-            {onOpenSupervisorGuide && (
-              <button
-                onClick={onOpenSupervisorGuide}
-                className="px-3.5 py-1.5 rounded-xl bg-blue-900 hover:bg-blue-800 text-white text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 border border-blue-700/40 cursor-pointer"
-                title="فتح المساعد الذكي للإشراف التربوي - 20 بطاقة للتدخل السريع"
-              >
-                <img src="/supervisor-icon.svg" alt="أيقونة الإشراف" className="w-4 h-4 object-contain inline-block rounded-xs" />
-                <span className="hidden sm:inline">دليل الإشراف الميداني</span>
-                <span className="sm:hidden">دليل الإشراف</span>
-                <span className="bg-amber-400 text-stone-900 text-[10px] px-1.5 py-0.2 rounded-full font-black">
-                  20 بطاقة
-                </span>
-              </button>
-            )}
-            <RegulationPdfDownloadModal buttonVariant="header" />
-            <button
-              onClick={() => setShowInstallPrompt(true)}
-              className="px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition-all shadow-xs flex items-center gap-1.5"
-            >
-              <Download className="w-3.5 h-3.5 text-emerald-400" />
-              <span>تثبيت التطبيق</span>
-            </button>
-            <span className="hidden sm:inline text-xs font-bold px-2.5 py-1 rounded-xl bg-emerald-100/80 text-emerald-900 border border-emerald-200">
-              ثانوية ابن الهيثم التقنية
+          <div className="flex items-center gap-2 self-start sm:self-center">
+            <span className="text-xs font-bold px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200">
+              الموسم الدراسي: 2026 / 2027
             </span>
           </div>
         </div>
 
-        {/* Central Title Pill (Hero like screenshot) */}
-        <div className="py-6 flex flex-col items-center text-center gap-2">
-          <div className="bg-white/95 backdrop-blur-md px-6 sm:px-10 py-3 rounded-full shadow-md border border-stone-200/80">
-            <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-red-700 tracking-tight">
-              النظام الداخلي الموحد
-            </h1>
-          </div>
-          <span className="text-sm sm:text-base font-black text-stone-800 mt-1">
-            لمؤسسات التربية والتعليم
-          </span>
-          <div className="flex items-center gap-2 mt-1 flex-wrap justify-center">
-            <span className="text-xs font-bold text-stone-600 bg-stone-100/90 px-3 py-1 rounded-full border border-stone-200">
-              القرار الوزاري رقم 778 / 65 والمرسوم 26-77
-            </span>
-            <span className="text-xs font-black text-emerald-800 bg-emerald-100 px-3 py-1 rounded-full border border-emerald-200">
-              السنة الدراسية: 2026 - 2027
-            </span>
-          </div>
+        {/* Central Institutional Title */}
+        <div className="py-5 sm:py-6 flex flex-col items-center text-center">
+          <h1 className="text-2xl sm:text-3xl font-black text-stone-950 tracking-tight">
+            النظام الداخلي الموحد لمؤسسات التربية والتعليم
+          </h1>
+          <p className="text-xs sm:text-sm text-stone-600 font-medium mt-1.5 max-w-2xl leading-relaxed">
+            المرجع التشريعي والتنظيمي الرسمي المنبثق عن القرار الوزاري رقم 778 / 65 والمرسوم التنفيذي 26-77 • الفصول الـ 9 الرسمية والمواد الـ 55
+          </p>
 
-          {/* Top Quick Access Card for Supervisor Field Guide */}
+          {/* Quick Access to Field Guide */}
           {onOpenSupervisorGuide && (
-            <div className="mt-2.5 flex items-center justify-center w-full max-w-2xl px-2">
+            <div className="mt-4 w-full max-w-xl">
               <button
                 onClick={onOpenSupervisorGuide}
-                className="group w-full flex items-center justify-between gap-3 px-4 sm:px-5 py-3 rounded-2xl bg-gradient-to-r from-blue-900 via-blue-800 to-indigo-950 text-white shadow-xl border-2 border-amber-400/80 hover:shadow-2xl hover:border-amber-300 transition-all cursor-pointer text-right"
+                className="w-full flex items-center justify-between gap-3 px-4 py-2.5 rounded-2xl bg-stone-900 hover:bg-stone-800 text-white text-right transition-colors cursor-pointer border border-stone-800"
               >
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2.5">
                   <img
                     src="/supervisor-icon.svg"
                     alt="أيقونة دليل الإشراف"
-                    className="w-11 h-11 rounded-xl bg-blue-950 p-0.5 shadow-md shrink-0 group-hover:scale-105 transition-transform border border-amber-400/50"
+                    className="w-8 h-8 rounded-xl bg-stone-800 p-0.5 shrink-0 object-contain"
                   />
                   <div>
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <span className="text-xs sm:text-sm font-black text-white">
-                        دليل الإشراف التربوي الميداني
-                      </span>
-                      <span className="bg-amber-400 text-stone-900 text-[10px] px-2 py-0.2 rounded-full font-black">
-                        20 بطاقة كاملة
-                      </span>
-                    </div>
-                    <p className="text-[11px] text-blue-200 font-medium mt-0.5">
-                      بطاقات التدخل السريع والمعالجة الميدانية (20 معضلة واقعية وحل بيداغوجي وقانوني معتمد)
+                    <span className="text-xs sm:text-sm font-black text-amber-300">
+                      دليل الإشراف التربوي الميداني (20 بطاقة معالجة موثقة)
+                    </span>
+                    <p className="text-[11px] text-stone-300">
+                      حلول وإجراءات فورية لمعضلات الحياة المدرسية بنماذج إدارية جاهزة
                     </p>
                   </div>
                 </div>
-                <div className="shrink-0 flex items-center gap-1 text-xs font-bold text-amber-300 bg-white/10 px-3 py-1.5 rounded-xl border border-white/10 group-hover:bg-white/20 transition-colors">
-                  <span>فتح الدليل (20 بطاقة)</span>
-                  <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform" />
-                </div>
+                <span className="text-xs font-bold text-amber-300 bg-stone-800 px-2.5 py-1 rounded-xl shrink-0">
+                  فتح الدليل ←
+                </span>
               </button>
             </div>
           )}
@@ -455,47 +417,9 @@ export const UnifiedRegulationsPortal: React.FC<UnifiedRegulationsPortalProps> =
       )}
 
       {/* ================= The 9 Official Chapters Grid (The Screenshot Design) ================= */}
+      {/* ================= The 9 Official Chapters Grid ================= */}
       {!searchQuery && !activeChapterId && (
         <div className="flex flex-col gap-4">
-          {/* Prominent Creative PDF Banner */}
-          <RegulationPdfDownloadModal buttonVariant="prominent" />
-
-          {/* New Official Supervisor Field Guide Banner */}
-          {onOpenSupervisorGuide && (
-            <div
-              onClick={onOpenSupervisorGuide}
-              className="w-full text-right bg-gradient-to-r from-blue-900 via-blue-800 to-indigo-950 text-white p-4 sm:p-5 rounded-3xl shadow-md border border-blue-600/40 hover:shadow-xl transition-all flex items-center justify-between gap-4 group cursor-pointer relative overflow-hidden"
-            >
-              <div className="absolute top-0 left-0 w-48 h-48 bg-blue-400/10 rounded-full blur-2xl pointer-events-none -translate-x-1/2 -translate-y-1/2" />
-              <div className="flex items-center gap-3.5 relative z-10">
-                <img
-                  src="/supervisor-icon.svg"
-                  alt="أيقونة دليل الإشراف"
-                  className="w-12 h-12 rounded-2xl bg-blue-950 p-1 border border-amber-400/50 shadow-md shrink-0 group-hover:scale-105 transition-transform"
-                />
-                <div>
-                  <div className="flex items-center gap-2 mb-1 flex-wrap">
-                    <span className="text-xs sm:text-sm font-black text-white">
-                      المساعد الذكي للإشراف التربوي الميداني
-                    </span>
-                    <span className="bg-amber-400 text-stone-900 text-[10px] px-2 py-0.2 rounded-full font-black">
-                      20 بطاقة معالجة فورية
-                    </span>
-                    <span className="bg-blue-600/60 text-blue-100 text-[10px] px-2 py-0.2 rounded-full font-bold">
-                      20 معضلة ميدانية وحل إجرائي موثق
-                    </span>
-                  </div>
-                  <p className="text-xs text-blue-100/90 leading-relaxed font-medium">
-                    خطوات إجرائية فورية لمشرفي ومستشاري التربية، أسانيد قانونية للمواد، ومحاضر رسمية جاهزة للنسخ والطباعة
-                  </p>
-                </div>
-              </div>
-              <div className="shrink-0 hidden md:flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white/10 group-hover:bg-white/20 text-white text-xs font-bold transition-all border border-white/20 relative z-10">
-                <span>تصفح الـ 20 بطاقة</span>
-                <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-              </div>
-            </div>
-          )}
 
           <div className="flex items-center justify-between px-1">
             <div className="flex items-center gap-2">

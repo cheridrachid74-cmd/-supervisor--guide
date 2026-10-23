@@ -24,6 +24,7 @@ import {
 import { SUPERVISOR_FIELD_CARDS } from '../data/supervisorFieldCards';
 import { SupervisorCategory, SupervisorFieldCard } from '../types';
 import { RACHID_SUPERVISOR } from '../data/rachidSupervisorPersona';
+import { Decree171Modal } from './Decree171Modal';
 
 interface SupervisorFieldGuideProps {
   onBackToPortal?: () => void;
@@ -270,80 +271,60 @@ ${card.pedagogicalSolution}
   };
 
   return (
-    <div className="space-y-5 max-w-5xl mx-auto pb-12 animate-fade-in font-['Cairo',sans-serif]">
-      {/* Top Banner / Hero Card with Supervisor Persona */}
-      <div className="bg-gradient-to-r from-blue-900 via-blue-800 to-slate-900 text-white rounded-3xl p-5 sm:p-7 shadow-xl border border-blue-700/40 relative overflow-hidden">
-        {/* Subtle decorative background circles */}
-        <div className="absolute top-0 left-0 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl pointer-events-none -translate-x-1/2 -translate-y-1/2" />
-        <div className="absolute bottom-0 right-0 w-48 h-48 bg-teal-500/10 rounded-full blur-2xl pointer-events-none translate-x-1/3 translate-y-1/3" />
-
-        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+    <div className="space-y-6 max-w-5xl mx-auto pb-12 animate-fade-in font-['Cairo',sans-serif]">
+      {/* Top Institutional Header Card */}
+      <div className="bg-white rounded-3xl p-5 sm:p-7 border border-stone-200/90 shadow-xs relative overflow-hidden">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="flex items-start gap-4">
             <img
               src="/supervisor-icon.svg"
               alt="أيقونة دليل الإشراف التربوي الميداني"
-              className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-blue-950 p-1 border-2 border-amber-400 shadow-2xl shrink-0 object-contain hover:scale-105 transition-transform"
+              className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-blue-950 p-1.5 shadow-md shrink-0 object-contain"
             />
             <div>
-              <div className="flex items-center gap-2 mb-2 flex-wrap">
-                <span className="px-2.5 py-0.5 rounded-full bg-blue-500/20 border border-blue-400/30 text-blue-200 text-xs font-bold flex items-center gap-1">
-                  <ShieldCheck className="w-3.5 h-3.5 text-blue-300" />
-                  مصلحة الاستشارة التربوية
-                </span>
-                <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-200 text-xs font-bold">
-                  ثانوية ابن الهيثم التقنية
-                </span>
-                <span className="px-3 py-0.5 rounded-full bg-amber-400 text-stone-900 text-xs font-black shadow-xs">
-                  {SUPERVISOR_FIELD_CARDS.length} بطاقة معالجة ميدانية موثقة (100% مكتملة)
-                </span>
+              <div className="flex items-center gap-2 text-xs font-bold text-stone-500 mb-1">
+                <span>ثانوية ابن الهيثم التقنية</span>
+                <span>·</span>
+                <span>مصلحة الاستشارة التربوية</span>
+                <span>·</span>
+                <span className="text-blue-900 font-black">20 بطاقة معتمدة</span>
               </div>
 
-              <h1 className="text-xl sm:text-2xl lg:text-3xl font-black tracking-tight text-white mb-2">
+              <h1 className="text-xl sm:text-2xl font-black text-stone-900 tracking-tight">
                 المساعد الذكي للإشراف التربوي الميداني
               </h1>
-              <p className="text-blue-100/90 text-xs sm:text-sm max-w-2xl leading-relaxed">
-                دليل التدخل السريع والمعالجة الميدانية لمعضلات الحياة المدرسية اليومية (20 بطاقة مهنية معتمدة)؛ حلول واقعية مستخلصة من ملتقيات ومنتديات الإشراف التربوي والتشريع المدرسي الجزائري بنماذج إدارية موثقة.
+              <p className="text-xs sm:text-sm text-stone-600 max-w-2xl leading-relaxed mt-1">
+                دليل التدخل السريع والمعالجة الميدانية لمعضلات الحياة المدرسية اليومية (20 بطاقة مهنية معتمدة)؛ حلول بيداغوجية وقانونية موثقة بنماذج إدارية ومحاضر رسمية جاهزة للنسخ والطباعة.
               </p>
             </div>
           </div>
 
-          <div className="flex items-center gap-2 flex-wrap self-start md:self-center">
+          <div className="flex items-center gap-2 flex-wrap self-start md:self-center shrink-0">
             <button
               onClick={() => setShowDecree171Modal(true)}
-              className="px-3.5 py-2 rounded-2xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-200 text-xs font-bold transition-all border border-amber-400/40 flex items-center gap-1.5 cursor-pointer shrink-0 shadow-xs"
+              className="px-3.5 py-1.5 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-800 text-xs font-bold transition-all border border-stone-200 flex items-center gap-1.5 cursor-pointer"
               title="عرض سلم تصنيف أخطاء التلاميذ والعقوبات الرسمية"
             >
-              <Scale className="w-4 h-4 text-amber-300" />
-              <span>سلّم العقوبات (القرار 171)</span>
+              <Scale className="w-3.5 h-3.5 text-amber-700" />
+              <span>القرار 171</span>
             </button>
-
-            <a
-              href="/supervisor.html"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-3 py-2 rounded-2xl bg-sky-500/20 hover:bg-sky-500/30 text-sky-200 text-xs font-bold transition-all border border-sky-400/30 flex items-center gap-1.5 cursor-pointer shrink-0"
-              title="فتح النسخة المستقلة الخفيفة بـ 20 بطاقة (صفحة HTML خفيفة)"
-            >
-              <FileText className="w-4 h-4 text-sky-300" />
-              <span>النسخة المستقلة HTML</span>
-            </a>
 
             <button
               onClick={handleForceCacheRefresh}
-              className="px-3 py-2 rounded-2xl bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-200 text-xs font-bold transition-all border border-emerald-400/30 flex items-center gap-1.5 cursor-pointer shrink-0"
-              title="إذا كان متصفحك يعرض 12 بطاقة بسبب الكاش القديم، انقر هنا لتحديث الصفحة فورا إلى 20 بطاقة"
+              className="px-3.5 py-1.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 text-xs font-bold transition-all border border-emerald-200 flex items-center gap-1.5 cursor-pointer"
+              title="تحديث ذاكرة التخزين المؤقت وضمان عرض الـ 20 بطاقة كاملة"
             >
-              <RotateCcw className="w-4 h-4 text-emerald-300" />
-              <span>تحديث الكاش (20 بطاقة)</span>
+              <RotateCcw className="w-3.5 h-3.5 text-emerald-700" />
+              <span>تحديث الكاش</span>
             </button>
 
             {onBackToPortal && (
               <button
                 onClick={onBackToPortal}
-                className="px-4 py-2 rounded-2xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold transition-all border border-white/20 flex items-center gap-2 cursor-pointer shrink-0"
+                className="px-3.5 py-1.5 rounded-xl bg-stone-900 hover:bg-stone-800 text-white text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer"
               >
-                <ArrowRight className="w-4 h-4" />
-                <span>العودة للفصول</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+                <span>الفصول الـ 9</span>
               </button>
             )}
           </div>
@@ -724,118 +705,10 @@ ${card.pedagogicalSolution}
       )}
 
       {/* Decree 171 Infractions Scale Reference Modal */}
-      {showDecree171Modal && (
-        <div
-          className="fixed inset-0 z-50 bg-stone-900/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 animate-fade-in"
-          onClick={() => setShowDecree171Modal(false)}
-        >
-          <div
-            className="bg-white w-full max-w-2xl max-h-[90vh] rounded-3xl shadow-2xl flex flex-col overflow-hidden border border-stone-200"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Modal Header */}
-            <div className="px-5 py-4 border-b border-stone-200 flex items-center justify-between bg-stone-50/90 shrink-0">
-              <div className="flex items-center gap-2.5">
-                <div className="w-9 h-9 rounded-xl bg-amber-500 text-white flex items-center justify-center font-bold text-sm shadow-xs">
-                  ⚖️
-                </div>
-                <div>
-                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-amber-100 text-amber-800 border border-amber-200">
-                    المرجع التشريعي الجزائري المعتمد
-                  </span>
-                  <h2 className="text-sm sm:text-base font-black text-stone-900 leading-tight mt-0.5">
-                    سلّم تصنيف أخطاء التلاميذ والعقوبات (القرار 171)
-                  </h2>
-                </div>
-              </div>
-
-              <button
-                onClick={() => setShowDecree171Modal(false)}
-                className="p-2 rounded-xl bg-stone-200 hover:bg-stone-300 text-stone-700 transition-colors cursor-pointer"
-                title="إغلاق"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            </div>
-
-            {/* Modal Body */}
-            <div className="p-5 overflow-y-auto space-y-4 text-xs sm:text-sm text-stone-800">
-              <div className="bg-blue-50 border border-blue-200 rounded-xl p-3 text-xs text-blue-900 leading-relaxed font-medium">
-                يحدد <strong>القرار الوزاري رقم 171 المؤرخ في 1 جوان 1992</strong> النظام الانضباطي داخل المؤسسات التعليمية، ويصنف مخالفات التلاميذ إلى 4 درجات محددة الصلاحيات تجنباً لأي تعسف وضماناً للعدالة التربوية:
-              </div>
-
-              {/* Degree 1 */}
-              <div className="bg-stone-50 border-r-4 border-sky-500 rounded-xl p-3.5 space-y-1.5">
-                <div className="flex items-center justify-between font-black text-sky-900 text-xs">
-                  <span>1. أخطاء الدرجة الأولى (مخالفات خفيفة)</span>
-                  <span className="text-[10px] bg-sky-100 text-sky-800 px-2 py-0.5 rounded-md">المشرف والأستاذ</span>
-                </div>
-                <div className="text-stone-700 text-xs">
-                  <strong>طبيعة الأخطاء:</strong> التأخرات الصباحية غير المتكررة، عدم ارتداء المئزر، إهمال الأدوات المدرسية، التشويش البسيط داخل القسم أو الرواق.
-                </div>
-                <div className="text-sky-950 font-bold text-xs">
-                  <strong>العقوبات المقررة:</strong> إنذار شفهي، تنبيه كتابي مسجل في الملف، تكليف التلميذ بنشاط نفعي تربوي (تنظيم مكتبة، نظافة الفناء).
-                </div>
-              </div>
-
-              {/* Degree 2 */}
-              <div className="bg-stone-50 border-r-4 border-amber-500 rounded-xl p-3.5 space-y-1.5">
-                <div className="flex items-center justify-between font-black text-amber-900 text-xs">
-                  <span>2. أخطاء الدرجة الثانية (إخلال متكرر بالنظام)</span>
-                  <span className="text-[10px] bg-amber-100 text-amber-800 px-2 py-0.5 rounded-md">مستشار التربية والمدير</span>
-                </div>
-                <div className="text-stone-700 text-xs">
-                  <strong>طبيعة الأخطاء:</strong> الغياب غير المبرر المتكرر، التهرب من الحصص، رفض الامتثال للتعليمات التربوية، تمزيق الوثائق المدرسية.
-                </div>
-                <div className="text-amber-950 font-bold text-xs">
-                  <strong>العقوبات المقررة:</strong> توبيخ كتابي رسمي يبلّغ لولي الأمر ويودع بالملف المدرسي، خصم من علامة المواظبة والسلوك.
-                </div>
-              </div>
-
-              {/* Degree 3 */}
-              <div className="bg-stone-50 border-r-4 border-orange-500 rounded-xl p-3.5 space-y-1.5">
-                <div className="flex items-center justify-between font-black text-orange-900 text-xs">
-                  <span>3. أخطاء الدرجة الثالثة (أخطاء جسيمة)</span>
-                  <span className="text-[10px] bg-orange-100 text-orange-800 px-2 py-0.5 rounded-md">مجلس التأديب</span>
-                </div>
-                <div className="text-stone-700 text-xs">
-                  <strong>طبيعة الأخطاء:</strong> الشجار العنيف بالساحة، تسلق أسوار الثانوية والهروب، الغش الموثق في الاختبارات، إتلاف التجهيزات المدرسية، استخدام الهاتف للتصوير غير المرخص.
-                </div>
-                <div className="text-orange-950 font-bold text-xs">
-                  <strong>العقوبات المقررة:</strong> إنذار شديد اللهجة مع التسجيل ببطاقية السوابق، إحالة على مجلس التأديب، الإقصاء المؤقت من 1 إلى 3 أيام، وإلزام الولي بالتعويض المادي.
-                </div>
-              </div>
-
-              {/* Degree 4 */}
-              <div className="bg-stone-50 border-r-4 border-red-600 rounded-xl p-3.5 space-y-1.5">
-                <div className="flex items-center justify-between font-black text-red-900 text-xs">
-                  <span>4. أخطاء الدرجة الرابعة (أخطاء بالغة الخطورة)</span>
-                  <span className="text-[10px] bg-red-100 text-red-800 px-2 py-0.5 rounded-md">مجلس التأديب + مديرية التربية</span>
-                </div>
-                <div className="text-stone-700 text-xs">
-                  <strong>طبيعة الأخطاء:</strong> حيازة الأسلحة البيضاء أو المواد الخطرة والمفرقعات، الاعتداء الجسدي العمدي، إهانة وشتم الأساتذة والموظفين (المادة 144 عقوبات)، التشهير والجرائم الإلكترونية، تزوير الأختام والمحررات.
-                </div>
-                <div className="text-red-950 font-bold text-xs">
-                  <strong>العقوبات المقررة:</strong> الإقصاء المؤقت لأكثر من 3 أيام، أو الإقصاء النهائي من المؤسسة مع التحويل إلى ثانوية أخرى، واحتفاظ الإدارة بحق الشكوى القضائية.
-                </div>
-              </div>
-            </div>
-
-            {/* Modal Footer */}
-            <div className="px-5 py-3 border-t border-stone-200 bg-stone-50 flex items-center justify-between">
-              <span className="text-[11px] text-stone-500 font-bold">
-                المصدر: القرار الوزاري رقم 171 وقانون التوجيه للتربية الوطنية
-              </span>
-              <button
-                onClick={() => setShowDecree171Modal(false)}
-                className="px-4 py-2 rounded-xl bg-blue-900 text-white text-xs font-bold hover:bg-blue-800 transition-colors cursor-pointer"
-              >
-                إغلاق الدليل التشريعي
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      <Decree171Modal
+        isOpen={showDecree171Modal}
+        onClose={() => setShowDecree171Modal(false)}
+      />
     </div>
   );
 };

@@ -28,15 +28,32 @@ import {
 } from '../data/simplifiedRegulationsSummary';
 
 interface RegulationPdfDownloadModalProps {
-  buttonVariant?: 'header' | 'prominent' | 'card';
+  buttonVariant?: 'header' | 'prominent' | 'card' | 'sidebar' | 'none';
   className?: string;
+  isOpenControlled?: boolean;
+  onCloseControlled?: () => void;
 }
 
 export const RegulationPdfDownloadModal: React.FC<RegulationPdfDownloadModalProps> = ({
   buttonVariant = 'header',
-  className = ''
+  className = '',
+  isOpenControlled,
+  onCloseControlled
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [internalIsOpen, setInternalIsOpen] = useState(false);
+  const isControlled = isOpenControlled !== undefined;
+  const isOpen = isControlled ? isOpenControlled : internalIsOpen;
+
+  const handleOpen = () => {
+    setInternalIsOpen(true);
+  };
+
+  const handleClose = () => {
+    if (onCloseControlled) {
+      onCloseControlled();
+    }
+    setInternalIsOpen(false);
+  };
   const [activeDocType, setActiveDocType] = useState<'all' | 'speeches' | 'pillars'>('all');
   const [isCopied, setIsCopied] = useState(false);
   const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
@@ -255,7 +272,7 @@ export const RegulationPdfDownloadModal: React.FC<RegulationPdfDownloadModalProp
       {/* ================= DISTINCTIVE CREATIVE BUTTON / ICON TRIGGER ================= */}
       {buttonVariant === 'header' && (
         <button
-          onClick={() => setIsOpen(true)}
+          onClick={handleOpen}
           className={`group relative flex items-center gap-2 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-2xl bg-gradient-to-r from-red-600 via-rose-700 to-red-800 hover:from-red-500 hover:to-rose-800 text-white shadow-md shadow-red-900/20 hover:shadow-lg hover:shadow-red-800/30 transition-all duration-300 border border-red-400/40 transform hover:-translate-y-0.5 cursor-pointer ${className}`}
           title="تحميل ملخصات وخطب القانون الداخلي PDF - إشراف المشرف ش. رشيد"
         >
@@ -285,7 +302,7 @@ export const RegulationPdfDownloadModal: React.FC<RegulationPdfDownloadModalProp
 
       {buttonVariant === 'prominent' && (
         <button
-          onClick={() => setIsOpen(true)}
+          onClick={handleOpen}
           className={`group relative overflow-hidden flex items-center justify-between gap-4 p-4 sm:p-5 rounded-3xl bg-gradient-to-l from-red-700 via-rose-800 to-stone-900 text-white shadow-xl shadow-red-950/20 border-2 border-red-500/30 hover:border-amber-400 transition-all duration-300 transform hover:scale-[1.01] cursor-pointer ${className}`}
         >
           <div className="absolute top-0 right-0 -translate-y-6 translate-x-6 w-32 h-32 bg-amber-400/10 rounded-full blur-2xl pointer-events-none group-hover:scale-150 transition-transform"></div>
@@ -411,7 +428,7 @@ export const RegulationPdfDownloadModal: React.FC<RegulationPdfDownloadModalProp
 
                 {/* CLOSE */}
                 <button
-                  onClick={() => setIsOpen(false)}
+                  onClick={handleClose}
                   className="p-2 rounded-xl bg-white/10 hover:bg-white/20 text-stone-300 hover:text-white transition-colors cursor-pointer"
                   title="إغلاق"
                 >
