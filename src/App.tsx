@@ -425,7 +425,7 @@ export default function App() {
         </header>
 
         {/* Scrollable Main Content Container */}
-        <main className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 scrollbar-thin">
+        <main className="flex-1 overflow-y-auto p-3 sm:p-6 lg:p-8 pb-24 lg:pb-8 scrollbar-thin">
           <div className="max-w-6xl mx-auto space-y-8">
             {/* TAB 1: PORTAL (The 9 Chapters and 55 Articles with Search and Audio) */}
             {activeTab === 'portal' && (
@@ -469,6 +469,71 @@ export default function App() {
             </footer>
           </div>
         </main>
+
+        {/* =========================================================================
+            MOBILE BOTTOM NAVIGATION BAR (Instant Access to The 9 Chapters & Tools)
+            ========================================================================= */}
+        <nav
+          aria-label="التنقل السفلي للهاتف"
+          className="lg:hidden fixed bottom-0 inset-x-0 bg-white/95 backdrop-blur-md border-t border-stone-200/90 z-40 px-2 py-1.5 flex items-center justify-around shadow-lg"
+        >
+          {/* 1. Main Home: The 9 Chapters */}
+          <button
+            onClick={() => changeTab('portal')}
+            className={`flex flex-col items-center justify-center py-1 px-2.5 rounded-xl text-[10px] font-bold transition-all cursor-pointer ${
+              activeTab === 'portal'
+                ? 'text-emerald-800 bg-emerald-50 font-black'
+                : 'text-stone-600 hover:text-stone-950'
+            }`}
+          >
+            <BookOpen className={`w-4 h-4 mb-0.5 ${activeTab === 'portal' ? 'text-emerald-700' : 'text-stone-500'}`} />
+            <span>الفصول الـ 9</span>
+          </button>
+
+          {/* 2. Supervisor Field Guide */}
+          <button
+            onClick={() => changeTab('supervisor')}
+            className={`flex flex-col items-center justify-center py-1 px-2.5 rounded-xl text-[10px] font-bold transition-all cursor-pointer ${
+              activeTab === 'supervisor'
+                ? 'text-blue-900 bg-blue-50 font-black'
+                : 'text-stone-600 hover:text-stone-950'
+            }`}
+          >
+            <img src="/supervisor-icon.svg" alt="" className="w-4 h-4 mb-0.5 object-contain" />
+            <span>دليل الإشراف (20)</span>
+          </button>
+
+          {/* 3. Decree 171 Modal */}
+          <button
+            onClick={() => setShowDecree171Modal(true)}
+            className="flex flex-col items-center justify-center py-1 px-2 rounded-xl text-[10px] font-bold text-stone-600 hover:text-stone-950 transition-all cursor-pointer"
+          >
+            <Scale className="w-4 h-4 mb-0.5 text-amber-600" />
+            <span>القرار 171</span>
+          </button>
+
+          {/* 4. Student Simplified Guide */}
+          <button
+            onClick={() => changeTab('simplified')}
+            className={`flex flex-col items-center justify-center py-1 px-2 rounded-xl text-[10px] font-bold transition-all cursor-pointer ${
+              activeTab === 'simplified'
+                ? 'text-emerald-800 bg-emerald-50 font-black'
+                : 'text-stone-600 hover:text-stone-950'
+            }`}
+          >
+            <GraduationCap className={`w-4 h-4 mb-0.5 ${activeTab === 'simplified' ? 'text-emerald-700' : 'text-stone-500'}`} />
+            <span>دليل التلميذ</span>
+          </button>
+
+          {/* 5. Full Menu / Drawer Trigger */}
+          <button
+            onClick={() => setIsSidebarOpen(true)}
+            className="flex flex-col items-center justify-center py-1 px-2 rounded-xl text-[10px] font-bold text-stone-600 hover:text-stone-950 transition-all cursor-pointer"
+          >
+            <Menu className="w-4 h-4 mb-0.5 text-stone-600" />
+            <span>القائمة</span>
+          </button>
+        </nav>
       </div>
 
       {/* =========================================================================

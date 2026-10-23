@@ -220,11 +220,11 @@ export const UnifiedRegulationsPortal: React.FC<UnifiedRegulationsPortalProps> =
   };
 
   return (
-    <div className="flex flex-col gap-6 w-full max-w-7xl mx-auto">
-      {/* ================= Institutional Header & Legal Framework ================= */}
-      <div className="bg-white rounded-3xl p-5 sm:p-7 border border-stone-200/90 shadow-xs relative overflow-hidden">
+    <div className="flex flex-col gap-5 sm:gap-6 w-full max-w-7xl mx-auto">
+      {/* ================= Institutional Header & 9 Chapters Main Hero ================= */}
+      <div className="bg-white rounded-3xl p-4 sm:p-6 lg:p-7 border border-stone-200/90 shadow-xs relative overflow-hidden">
         {/* Top Republic Bar */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-stone-100">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 sm:pb-4 border-b border-stone-100">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-2xl bg-emerald-700 text-white flex items-center justify-center text-lg font-bold shadow-xs shrink-0">
               🇩🇿
@@ -240,49 +240,45 @@ export const UnifiedRegulationsPortal: React.FC<UnifiedRegulationsPortalProps> =
           </div>
 
           <div className="flex items-center gap-2 self-start sm:self-center">
-            <span className="text-xs font-bold px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200">
+            <span className="text-[11px] sm:text-xs font-bold px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200">
               الموسم الدراسي: 2026 / 2027
             </span>
           </div>
         </div>
 
-        {/* Central Institutional Title */}
-        <div className="py-5 sm:py-6 flex flex-col items-center text-center">
-          <h1 className="text-2xl sm:text-3xl font-black text-stone-950 tracking-tight">
-            النظام الداخلي الموحد لمؤسسات التربية والتعليم
+        {/* Central Institutional Title & Core Identity */}
+        <div className="pt-4 pb-3 flex flex-col items-center text-center">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 text-emerald-900 border border-emerald-200 text-xs font-bold mb-2 shadow-2xs">
+            <BookOpen className="w-3.5 h-3.5 text-emerald-700" />
+            <span>الواجهة الرئيسية للنظام الداخلي</span>
+          </div>
+
+          <h1 className="text-xl sm:text-2xl lg:text-3xl font-black text-stone-950 tracking-tight">
+            الفصول الـ 9 الرسمية للنظام الداخلي الموحد
           </h1>
           <p className="text-xs sm:text-sm text-stone-600 font-medium mt-1.5 max-w-2xl leading-relaxed">
-            المرجع التشريعي والتنظيمي الرسمي المنبثق عن القرار الوزاري رقم 778 / 65 والمرسوم التنفيذي 26-77 • الفصول الـ 9 الرسمية والمواد الـ 55
+            55 مادة قانونية مؤطرة للحياة المدرسية وفق المنشور الوزاري والقرار 778/65 والمرسوم 26-77
           </p>
 
-          {/* Quick Access to Field Guide */}
-          {onOpenSupervisorGuide && (
-            <div className="mt-4 w-full max-w-xl">
+          {/* Institutional KPI Summary Chips */}
+          <div className="flex items-center justify-center gap-2 sm:gap-3 flex-wrap mt-3.5 text-xs font-bold">
+            <span className="px-3 py-1 rounded-xl bg-stone-100 text-stone-800 border border-stone-200/80">
+              📖 9 فصول تشريعية
+            </span>
+            <span className="px-3 py-1 rounded-xl bg-emerald-50 text-emerald-900 border border-emerald-200">
+              ⚖️ 55 مادة قانونية مشروحة
+            </span>
+            {onOpenSupervisorGuide && (
               <button
                 onClick={onOpenSupervisorGuide}
-                className="w-full flex items-center justify-between gap-3 px-4 py-2.5 rounded-2xl bg-stone-900 hover:bg-stone-800 text-white text-right transition-colors cursor-pointer border border-stone-800"
+                className="px-3 py-1 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-900 border border-blue-200 flex items-center gap-1.5 transition-colors cursor-pointer"
+                title="الانتقال إلى دليل الإشراف الميداني"
               >
-                <div className="flex items-center gap-2.5">
-                  <img
-                    src="/supervisor-icon.svg"
-                    alt="أيقونة دليل الإشراف"
-                    className="w-8 h-8 rounded-xl bg-stone-800 p-0.5 shrink-0 object-contain"
-                  />
-                  <div>
-                    <span className="text-xs sm:text-sm font-black text-amber-300">
-                      دليل الإشراف التربوي الميداني (20 بطاقة معالجة موثقة)
-                    </span>
-                    <p className="text-[11px] text-stone-300">
-                      حلول وإجراءات فورية لمعضلات الحياة المدرسية بنماذج إدارية جاهزة
-                    </p>
-                  </div>
-                </div>
-                <span className="text-xs font-bold text-amber-300 bg-stone-800 px-2.5 py-1 rounded-xl shrink-0">
-                  فتح الدليل ←
-                </span>
+                <img src="/supervisor-icon.svg" alt="" className="w-3.5 h-3.5 object-contain" />
+                <span>دليل الإشراف الميداني (20 بطاقة) ←</span>
               </button>
-            </div>
-          )}
+            )}
+          </div>
         </div>
 
         {/* Main Instant Search Input (Central prominent white input) */}
@@ -416,19 +412,19 @@ export const UnifiedRegulationsPortal: React.FC<UnifiedRegulationsPortalProps> =
         </div>
       )}
 
-      {/* ================= The 9 Official Chapters Grid (The Screenshot Design) ================= */}
-      {/* ================= The 9 Official Chapters Grid ================= */}
+      {/* ================= The 9 Official Chapters Grid (Primary Core Interface) ================= */}
       {!searchQuery && !activeChapterId && (
-        <div className="flex flex-col gap-4">
-
-          <div className="flex items-center justify-between px-1">
+        <div className="flex flex-col gap-3.5 sm:gap-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 px-1">
             <div className="flex items-center gap-2">
               <BookOpen className="w-5 h-5 text-emerald-800" />
               <h2 className="text-base sm:text-lg font-black text-stone-900">
-                الفصول الرسمية للنظام الداخلي (انقر على أي فصل للاطلاع على مواده):
+                الفصول الـ 9 المعتمدة (اختر فصلاً لعرض مواده الـ 55):
               </h2>
             </div>
-            <span className="text-xs font-bold text-stone-500">9 فصول • 55 مادة</span>
+            <span className="text-xs font-bold text-stone-600 bg-stone-100 border border-stone-200 px-3 py-1 rounded-full self-start sm:self-auto">
+              9 فصول كاملة • 55 مادة قانونية
+            </span>
           </div>
 
           {/* 2-Column / 3-Column Responsive Grid matching the reference screenshot */}
